@@ -378,10 +378,11 @@ class Yolo_dataset(Dataset):
         if use_mixup == 3:
             out_bboxes = np.concatenate(out_bboxes, axis=0)
         out_bboxes1 = np.zeros([self.cfg.boxes, 5])
+        
+        out_bboxes = np.array(out_bboxes, dtype=np.float32)
         try:
             out_bboxes1[:min(out_bboxes.shape[0], self.cfg.boxes)] = out_bboxes[:min(out_bboxes.shape[0], self.cfg.boxes)]
         except AttributeError:
-            out_bboxes = np.array(out_bboxes, dtype=np.float32)
             out_bboxes1[:min(out_bboxes.shape[0], self.cfg.boxes)] = out_bboxes[:min(out_bboxes.shape[0], self.cfg.boxes)]
         return out_img, out_bboxes1
 
